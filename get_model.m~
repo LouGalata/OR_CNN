@@ -1,0 +1,19 @@
+function model = get_model(num_layers, imageSize, num_neurons)
+    if num_layers == 1
+        layers_v1 = [
+        imageInputLayer(imageSize)
+        convolution2dLayer(5,20)
+        batchNormalizationLayer
+        reluLayer
+        maxPooling2dLayer(2,'Stride',2)
+        fullyConnectedLayer(10)
+        softmaxLayer
+        classificationLayer];
+    elseif num_layers == 3
+        
+    else
+        t = strcat(num_layers, ' is a non configured option');
+        disp(t)
+        return
+        
+end
