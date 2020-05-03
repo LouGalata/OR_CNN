@@ -1,4 +1,5 @@
-[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data;
+[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data(4000);
+
 
 
 imageAugmenterRotation = imageDataAugmenter('RandRotation', [-20,20]);
@@ -11,13 +12,13 @@ imageSize = [28 28 1];
 augimds = augmentedImageDatastore(imageSize,XTrain,YTrain,...
         'DataAugmentation',imageAugmenterRotation);
 
-num_layers = 1;
+architecture = 'v1';
 num_neurons = 32;
 
-model = get_model(num_layers, imageSize, num_neurons );
+model = get_model(architecture, imageSize, num_neurons );
 
 epocs_factor = 10;
-options = trainingOptions('sgdm', 'MaxEpochs',20*epocs_factor, 'Shuffle',...
+options = trainingOptions('sgdm', 'MaxEpochs',20*1, 'Shuffle',...
         'every-epoch', 'Verbose',true, 'Plots','training-progress', ...
         'ValidationData',{XValidation,YValidation}, ...
         'ValidationFrequency', 20 );

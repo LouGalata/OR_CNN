@@ -1,6 +1,6 @@
-function [XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data()
+function [XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data(training_samples)
     [XTrain,YTrain] = digitTrain4DArrayData;
-    Training_n_samples=4000;
+    Training_n_samples=training_samples;
     Dataset_n_samples= size(XTrain,4);
     epocs_factor=round(Dataset_n_samples/Training_n_samples);
     Non_training_samples=Dataset_n_samples-Training_n_samples;
