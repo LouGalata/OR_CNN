@@ -11,8 +11,8 @@
 % activate 'RandRotation', 'RandXTranslation' , ‘RandYTranslation', ‘RandYReflection’ and RandXReflection
 % What do you observe?
 
-testing_sample = 300;
-[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data_given_test_set(testing_sample);
+training_sample = 300;
+[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data(training_sample);
 
 
 imageAugmenter_exp1 = imageDataAugmenter('RandRotation', [-20,20]);

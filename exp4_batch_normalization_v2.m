@@ -2,8 +2,8 @@
 % How the training and validation performance change?
 
 
-testing_sample = 300;
-[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data_given_test_set(testing_sample);
+training_sample = 300;
+[XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data(training_sample);
 
 imageSize = [28 28 1];
 augimds = augmentedImageDatastore(imageSize,XTrain,YTrain);

@@ -6,12 +6,12 @@
 % What happens if we set “epocs_factor” to 1?
 
 
-testing_samples_list = {300};
-for testing_sample = 1:length(testing_samples_list)
+training_samples_list = {300};
+for training_sample = 1:length(training_samples_list)
     % We defined val_size = train_size / 8. So,
     % Test = 1000 --> Train = 3500, Val = 500
     % Test = 300 --> Train = 4112, Val = 588
-    [XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data_given_test_set(testing_samples_list{testing_sample});
+    [XTrain, YTrain, XValidation, YValidation, XTest, YTest] = load_data(training_samples_list{training_sample});
 
     imageSize = [28 28 1];
     augimds = augmentedImageDatastore(imageSize,XTrain,YTrain);
