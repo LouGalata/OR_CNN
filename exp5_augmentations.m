@@ -36,14 +36,17 @@ for key = keys(augmentation_strategy)
 
     model = get_model(architecture, imageSize, num_neurons);
 
-    epocs_factor = 1; % change it and observe performance
-    options = trainingOptions('sgdm', 'MaxEpochs',20*epocs_factor, 'Shuffle',...
+    epochs_factor = 4000/300;
+
+    options = trainingOptions('sgdm', 'MaxEpochs',cast(20*epochs_factor, 'int32'), 'Shuffle',...
             'every-epoch', 'Verbose',true, 'Plots','training-progress', ...
             'ValidationData',{XValidation,YValidation}, ...
             'ValidationFrequency', 20 );
 
-    net = trainNetwork(augimds,model,options);
+    [net, info] = trainNetwork(augimds,model,options);
+    save("results\augmentation="+key+".mat", 'info')
 
+    
     YPred = classify(net,XTest);
 
     accuracy = sum(YPred == YTest)/numel(YTest);

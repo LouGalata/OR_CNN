@@ -3,10 +3,10 @@
 % Set the test-set to 300, and comment the %batchNormalizationLayer in layers_v1
 % What do we observe in the performance? 
 % How the training and validation curve behave? 
-% What happens if we set “epocs_factor” to 1?
+% What happens if we set “epocs_factor�? to 1?
 
 
-training_samples_list = {300};
+training_samples_list = {1000, 300};
 for training_sample = 1:length(training_samples_list)
     % We defined val_size = train_size / 8. So,
     % Test = 1000 --> Train = 3500, Val = 500
@@ -22,13 +22,16 @@ for training_sample = 1:length(training_samples_list)
 
     model = get_model(architecture, imageSize, num_neurons);
     
-    epocs_factor = 1; % change it and observe performance
-    options = trainingOptions('sgdm', 'MaxEpochs',20*epocs_factor, 'Shuffle',...
+    %epocs_factor = 1; % change it and observe performance
+    epochs_factor = 4000/training_samples_list{training_sample};
+
+    options = trainingOptions('sgdm', 'MaxEpochs',cast(20*epochs_factor, 'int32'), 'Shuffle',...
             'every-epoch', 'Verbose',true, 'Plots','training-progress', ...
             'ValidationData',{XValidation,YValidation}, ...
             'ValidationFrequency', 20 );
 
-    net = trainNetwork(augimds,model,options);
+    [net, info] = trainNetwork(augimds,model,options);
+    save("results\bv_v1_samples="+training_samples_list{training_sample}+"-ef="+epochs_factor+".mat", 'info')
 
     YPred = classify(net,XTest);
 

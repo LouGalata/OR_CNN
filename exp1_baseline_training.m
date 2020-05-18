@@ -11,19 +11,20 @@ training_sample = 4000;
 imageSize = [28 28 1];
 augimds = augmentedImageDatastore(imageSize,XTrain,YTrain);
 
-architecture = 'v1';
+architecture = 'v2';
 num_neurons = 32;
 num_epochs = 20;
 
 model = get_model(architecture, imageSize, num_neurons);
 
 epocs_factor = 1;
-options = trainingOptions('sgdm', 'MaxEpochs',20*epocs_factor, 'Shuffle',...
+options = trainingOptions('sgdm', 'MaxEpochs',num_epochs*epocs_factor, 'Shuffle',...
         'every-epoch', 'Verbose',true, 'Plots','training-progress', ...
         'ValidationData',{XValidation,YValidation}, ...
         'ValidationFrequency', 20 );
     
-net = trainNetwork(augimds,model,options);
+[net, info] = trainNetwork(augimds,model,options);
+save("results\baseline_"+architecture+".mat", 'info')
 
 YPred = classify(net,XTest);
 
